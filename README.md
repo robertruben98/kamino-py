@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Types: py.typed](https://img.shields.io/badge/types-py.typed-blue.svg)](https://peps.python.org/pep-0561/)
 
-A small, typed Python client for the [Kamino Finance](https://kamino.com) public API — read-only
+A small, typed Python client for the [Kamino Finance](https://kamino.finance) public API — read-only
 access to Solana DeFi data: lending markets, reserves, liquidity vaults (KVaults), oracle prices,
 and staking yields.
 
@@ -84,11 +84,15 @@ All endpoints were **discovered from the live Kamino API** (the OpenAPI spec at
 | `get_vaults()` | `GET /kvaults/vaults` | `list[Vault]` |
 | `get_vault(pubkey)` | `GET /kvaults/vaults/{pubkey}` | `Vault` |
 | `get_vault_metrics(pubkey)` | `GET /kvaults/vaults/{pubkey}/metrics` | `KvaultMetrics` |
-| `get_oracle_prices(markets=None)` | `GET /oracles/prices` | `list[OraclePrice]` |
+| `get_oracle_prices(markets="main")` | `GET /oracles/prices` | `list[OraclePrice]` |
 | `get_staking_yields()` | `GET /v2/staking-yields` | `list[StakingYield]` |
 
+`get_oracle_prices` accepts a `markets` argument that the API defines as an enum: `"main"` (the
+default — assets in the main market) or `"all"` (assets across every public KLend market). Other
+values are rejected by the API with HTTP 400.
+
 The full public API exposes many more endpoints (user positions, rewards, historical metrics,
-transaction building, etc.); see the [official API reference](https://kamino.com/build/api-reference/introduction).
+transaction building, etc.); see the [official API reference](https://docs.kamino.finance).
 This v1 client deliberately covers the core read-only data surface.
 
 ## Numeric values

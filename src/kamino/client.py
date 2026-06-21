@@ -13,7 +13,7 @@ Example:
 from __future__ import annotations
 
 from types import TracebackType
-from typing import Any, Optional, TypeVar
+from typing import Any, Literal, Optional, TypeVar
 
 import httpx
 from pydantic import BaseModel
@@ -188,14 +188,16 @@ class KaminoClient:
         data = self._get(f"/kvaults/vaults/{pubkey}/metrics")
         return KvaultMetrics.model_validate(data)
 
-    def get_oracle_prices(self, *, markets: Optional[str] = None) -> list[OraclePrice]:
+    def get_oracle_prices(self, *, markets: Literal["main", "all"] = "main") -> list[OraclePrice]:
         """Get Kamino oracle prices.
 
         Calls ``GET /oracles/prices``.
 
         Args:
-            markets: Optional comma-separated list of market pubkeys to scope
-                the prices to.
+            markets: Which market set to query. ``"main"`` (the default) returns
+                oracle prices for assets in the main market; ``"all"`` returns
+                prices for assets across all public KLend markets. The API only
+                accepts these two values (passing anything else returns HTTP 400).
 
         Returns:
             A list of :class:`~kamino.models.OraclePrice`.
@@ -321,10 +323,13 @@ class AsyncKaminoClient:
         data = await self._get(f"/kvaults/vaults/{pubkey}/metrics")
         return KvaultMetrics.model_validate(data)
 
-    async def get_oracle_prices(self, *, markets: Optional[str] = None) -> list[OraclePrice]:
+    async def get_oracle_prices(
+        self, *, markets: Literal["main", "all"] = "main"
+    ) -> list[OraclePrice]:
         """Get Kamino oracle prices.
 
-        Calls ``GET /oracles/prices``. See
+        Calls ``GET /oracles/prices``. The ``markets`` argument selects the
+        market set: ``"main"`` (default) or ``"all"``. See
         :meth:`KaminoClient.get_oracle_prices`.
         """
         data = await self._get("/oracles/prices", params={"markets": markets})

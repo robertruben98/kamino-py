@@ -151,6 +151,17 @@ def test_get_oracle_prices(client: KaminoClient) -> None:
 
 
 @respx.mock
+def test_get_oracle_prices_passes_markets_query(client: KaminoClient) -> None:
+    # The API's `markets` query is an enum ("main" | "all"); "all" must be
+    # forwarded so callers can fetch prices across every klend market.
+    route = respx.get(f"{BASE}/oracles/prices", params={"markets": "all"}).mock(
+        return_value=httpx.Response(200, json=[])
+    )
+    client.get_oracle_prices(markets="all")
+    assert route.called
+
+
+@respx.mock
 def test_get_staking_yields(client: KaminoClient) -> None:
     respx.get(f"{BASE}/v2/staking-yields").mock(
         return_value=httpx.Response(200, json=[{"apy": "0.061", "tokenMint": "mSoL"}])
