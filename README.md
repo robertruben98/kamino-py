@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/robertruben98/kamino-py/actions/workflows/ci.yml/badge.svg)](https://github.com/robertruben98/kamino-py/actions/workflows/ci.yml)
 [![PyPI version](https://img.shields.io/pypi/v/kamino-py.svg)](https://pypi.org/project/kamino-py/)
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://robertruben98.github.io/kamino-py/)
 [![Python versions](https://img.shields.io/pypi/pyversions/kamino-py.svg)](https://pypi.org/project/kamino-py/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Types: py.typed](https://img.shields.io/badge/types-py.typed-blue.svg)](https://peps.python.org/pep-0561/)
