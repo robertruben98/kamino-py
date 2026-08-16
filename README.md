@@ -45,7 +45,9 @@ with KaminoClient() as client:
 
     # Reserve metrics (APYs, supply/borrow) for the primary market
     for reserve in client.get_reserve_metrics(primary.lending_market):
-        print(f"{reserve.liquidity_token}: supply {reserve.supply_apy}  borrow {reserve.borrow_apy}")
+        print(
+            f"{reserve.liquidity_token}: supply {reserve.supply_apy}  borrow {reserve.borrow_apy}"
+        )
 
     # Oracle prices
     for price in client.get_oracle_prices()[:5]:
@@ -128,8 +130,8 @@ except KaminoAPIError as e:
 ```python
 KaminoClient(
     base_url="https://api.kamino.finance",  # override for a proxy/staging host
-    timeout=30.0,                            # request timeout in seconds
-    http_client=my_httpx_client,             # bring your own httpx.Client
+    timeout=30.0,  # request timeout in seconds
+    http_client=my_httpx_client,  # bring your own httpx.Client
 )
 ```
 
